@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+<script type="text/javascript" src="angular.min.js"></script>
+<script type="text/javascript" src="controller/creditcardController.js"></script>
+<script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
+
+<script>
+    var APP = new Firebase('https://seu-app.firebaseIO.com/');
+     $('#mensagem').keypress(function (e) {
+      if (e.keyCode == 13) {
+
+        var msg = $('#mensagem').val();
+        var usr = $('#nomeusuario').val();
+        APP.push({ nomeusuario: usr, mensagem: msg });
+
+        $('#mensagem').val('');
+      }
+    });
+  </script>
+</head>
+
+<body ng-controller="myCtrl">
+<header><h1>CreditCard</h1></header>
+<section id="cadastro">
+	<h2>Cadastro:</h2>
+	<form>
+	<fieldset>
+		<legend>Dados do cartão</legend>
+
+		<p>
+		  numero: 4042802762737667 
+		  expirationMonth: 11
+		  expirationYear: 2022
+		  Name: Portador A
+		  documentType: CPF
+		  documentNumber: 11618796763
+		  
+		</p>
+
+		<label for="creditCardPan">Número:</label>
+		<input type="text" ng-model="creditCardPan" id="creditCardPan"/>
+
+		<label for="creditCardHolderName">Nome:</label>
+		<input type="text" ng-model="creditCardHolderName" id="creditCardHolderName"/>
+	
+		<label for="expirationMonth">Validade:</label>
+		<input type="text" ng-model="creditCardExpirationMonth" id="creditCardExpirationMonth"/>
+		<input type="text" ng-model="creditCardExpirationYear" id="creditCardExpirationYear"/>
+	</fieldset>
+	<fieldset>
+		<legend>Dados pessoais</legend>
+		<label for="customerName">Nome:</label>
+		<input type="text" ng-model="customerName" id="customerName"/>
+
+		<label for="customerDocumentType">Documento:</label>
+		<input list="documentType" ng-model="customerDocumentType" id="customerDocumentType"/>
+			<datalist id="documentType"  >
+				<option value="{{tipo}}" ng-repeat="tipo in documentTypes"/> 
+			</datalist> 
+		<input type="text" ng-model="customerDocumentNumber" id="customerDocumentNumber" />
+	</fieldset>
+		<button ng-click="cadastrarCartao()">Cadastrar</button>
+
+	</form>
+	<p>{{resposta}}</p>
+
+</section>
+
+<section id="pagamento">
+	<h2>Pagamento</h2>
+	
+</section>
+
+</body>
+
+</html>
